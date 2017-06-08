@@ -123,27 +123,82 @@ def getAllInfo():
 	orgdream = 0
 	if tpmloaded:
 		orgdream = tpm_check()
-
-	if fileExists("/proc/stb/info/hwmodel"):
-		brand = "DAGS"
-		f = open("/proc/stb/info/hwmodel",'r')
+# [IQON] brandtype and procmodel.
+#	if fileExists("/proc/stb/info/hwmodel"):
+#		brand = "DAGS"
+        if fileExists("/proc/stb/info/modelname"):
+		f = open("/proc/stb/info/modelname",'r')
 		procmodel = f.readline().strip()
 		f.close()
-		if (procmodel.startswith("optimuss") or procmodel.startswith("pingulux")):
-			brand = "Edision"
-			model = procmodel.replace("optimmuss", "Optimuss ").replace("plus", " Plus").replace(" os", " OS")
-		elif (procmodel.startswith("fusion") or procmodel.startswith("purehd") or procmodel.startswith("revo4k") or procmodel.startswith("galaxy4k")):
-			brand = "Xsarius"
-			if procmodel == "fusionhd":
-				model = procmodel.replace("fusionhd", "Fusion HD")
-			elif procmodel == "fusionhdse":
-				model = procmodel.replace("fusionhdse", "Fusion HD SE")
-			elif procmodel == "purehd":
-				model = procmodel.replace("purehd", "PureHD")
-			elif procmodel == "revo4k":
-				model = procmodel.replace("revo4k", "Revo4K")
-			elif procmodel == "galaxy4k":
-				model = procmodel.replace("galaxy4k", "Galaxy4K")
+
+                if fileExists("/etc/.brandtype"):
+                        f = open("/etc/.brandtype",'r')
+                        brand = f.readline().strip().capitalize()
+                        f.close()
+
+                if fileExists("proc/stb/info/hwmodel"):
+                        f = open("/proc/stb/info/hwmodel")
+                        model = f.readline().strip()
+                        f.close()
+
+                # TODO : brandtype
+#                remote = model
+#               type = chipset...?
+        if brand == "technomate":
+                if model in ("tmnanooe", "tmsingle"):
+                        remote = "te_type1"
+                else:
+                        if model in ("force1plus", "force2plus"):
+                                remote = "te_type3"
+                        elif model in ("force1", "tmnano2super"):
+                                remote = "te_type2"
+                        elif model in ("tmnanose", "tmnanosecombo"):
+                                remote = "te_type3"
+                        elif model in ("tmnanosem2", "tmnanoseplus"):
+                                remote = "te_type4"
+                        elif model in ("tmnanom3"):
+                                remote = "tmnanom3"
+                        else:
+                                remote = "te_type0"
+        elif brand == "swiss":
+                if model in ("force1plus", "force1"):
+                        remote = "sw_type0"
+        elif brand == "edision":
+                if model in ("force1plus"):
+                        remote = "ed_type0"
+                else:
+                        if model in ("optimussos1plus", "optimussos2plus", "optimussos"):
+                                remote = "ed_type1"
+        elif brand == "worldvision":
+                if model in ("force1plus", "force1", "force2", "force2solid"):
+                        remote  = "wo_type0"
+        elif brand == "xsarius":
+                remote = model
+        elif brand == "iqon":
+                if model in ("force1plus", "force1"):
+                        remote = "wo_type0"
+                elif model in ("purehd"):
+                        remote = model
+                elif model in ("selfset"):
+                        remote = model
+                else:
+                        remote = "iqon"
+                        
+#		if (procmodel.startswith("optimuss") or procmodel.startswith("pingulux")):
+#			brand = "Edision"
+#			model = procmodel.replace("optimmuss", "Optimuss ").replace("plus", " Plus").replace(" os", " OS")
+#		elif (procmodel.startswith("fusion") or procmodel.startswith("purehd") or procmodel.startswith("revo4k") or procmodel.startswith("galaxy4k")):
+#			brand = "Xsarius"
+#			if procmodel == "fusionhd":
+#				model = procmodel.replace("fusionhd", "Fusion HD")
+#			elif procmodel == "fusionhdse":
+#				model = procmodel.replace("fusionhdse", "Fusion HD SE")
+#			elif procmodel == "purehd":
+#				model = procmodel.replace("purehd", "PureHD")
+#			elif procmodel == "revo4k":
+#				model = procmodel.replace("revo4k", "Revo4K")
+#			elif procmodel == "galaxy4k":
+#				model = procmodel.replace("galaxy4k", "Galaxy4K")
 	elif fileExists("/proc/stb/info/azmodel"):
 		brand = "AZBox"
 		f = open("/proc/stb/info/model",'r') # To-Do: Check if "model" is really correct ...
@@ -481,16 +536,17 @@ def getAllInfo():
 		remote = procmodel
 	elif procmodel.startswith("osm"):
 		remote = "osmini"
-	elif procmodel in ("fusionhd"):
-		remote = procmodel
-	elif procmodel in ("fusionhdse"):
-		remote = procmodel
-	elif procmodel in ("purehd"):
-		remote = procmodel
-	elif procmodel in ("revo4k"):
-		remote = procmodel
-	elif procmodel in ("galaxy4k"):
-		remote = procmodel
+# [IQON] remote is hwmodel.
+#	elif procmodel in ("fusionhd"):
+#		remote = procmodel
+#	elif procmodel in ("fusionhdse"):
+#		remote = procmodel
+#	elif procmodel in ("purehd"):
+#		remote = procmodel
+#	elif procmodel in ("revo4k"):
+#		remote = procmodel
+#	elif procmodel in ("galaxy4k"):
+#		remote = procmodel
 	elif procmodel in ("sh1", "lc"):
 		remote = "sh1"
 	elif procmodel in ("h3", "h5", "h7"):

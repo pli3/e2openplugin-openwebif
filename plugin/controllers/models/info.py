@@ -26,13 +26,19 @@ from enigma import eDVBVolumecontrol, eServiceCenter, eServiceReference, eEnv
 from twisted.web import version
 from socket import has_ipv6, AF_INET6, AF_INET, inet_ntop, inet_pton, getaddrinfo
 
-try:
-	from boxbranding import getBoxType, getMachineBuild, getMachineBrand, getMachineName, getImageDistro, getImageVersion, getImageBuild, getOEVersion, getDriverDate
-	from enigma import getEnigmaVersionString
-except:
-	from owibranding import getBoxType, getMachineBuild, getMachineBrand, getMachineName, getImageDistro, getImageVersion, getImageBuild, getOEVersion, getDriverDate
-	def getEnigmaVersionString():
-		return about.getEnigmaVersionString()
+# [IQON] owibranding get information.
+from owibranding import getBoxType, getMachineBuild, getMachineBrand, getMachineName, getImageDistro, getImageVersion, getImageBuild, getOEVersion, getDriverDate
+
+def getEnigmaVersionString():
+	return about.getEnigmaVersionString()
+
+#try:
+#	from boxbranding import getBoxType, getMachineBuild, getMachineBrand, getMachineName, getImageDistro, getImageVersion, getImageBuild, getOEVersion, getDriverDate
+#	from enigma import getEnigmaVersionString
+#except:
+#	from owibranding import getBoxType, getMachineBuild, getMachineBrand, getMachineName, getImageDistro, getImageVersion, getImageBuild, getOEVersion, getDriverDate
+#	def getEnigmaVersionString():
+#		return about.getEnigmaVersionString()
 
 import NavigationInstance
 

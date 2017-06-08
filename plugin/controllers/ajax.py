@@ -23,10 +23,13 @@ from models.locations import getLocations
 from twisted.web.resource import Resource
 import os
 
-try:
-	from boxbranding import getBoxType, getMachineName, getMachineBrand, getMachineBuild
-except:
-	from models.owibranding import getBoxType, getMachineName, getMachineBrand, getMachineBuild
+# [IQON] import owibranding info.
+from models.owibranding import getBoxType, getMachineName, getMachineBrand, getMachineBuild
+
+#try:
+#	from boxbranding import getBoxType, getMachineName, getMachineBrand, getMachineBuild
+#except:
+#	from models.owibranding import getBoxType, getMachineName, getMachineBrand, getMachineBuild
 
 class AjaxController(BaseController):
 	def __init__(self, session, path = ""):

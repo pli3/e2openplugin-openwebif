@@ -38,18 +38,23 @@ def new_getRequestHostname(self):
 http.Request.getRequestHostname = new_getRequestHostname
 
 
-try:
-	from boxbranding import getBoxType, getMachineName
-except:
-	from models.owibranding import getBoxType, getMachineName
+# [IQON] import owibranding info.
+from models.owibranding import getBoxType, getMachineName
+#try:
+#	from boxbranding import getBoxType, getMachineName
+#except:
+#	from models.owibranding import getBoxType, getMachineName
 
 remote=''
-try:
-	from Components.RcModel import rc_model
-	remote = rc_model.getRcFolder() + "/remote"
-except:
-	from models.owibranding import rc_model
-	remote = rc_model().getRcFolder()
+from models.owibranding import rc_model
+remote = rc_model().getRcFolder()
+# [IQON]
+#try:
+#	from Components.RcModel import rc_model
+#	remote = rc_model.getRcFolder() + "/remote"
+#except:
+#	from models.owibranding import rc_model
+#	remote = rc_model().getRcFolder()
 
 class BaseController(resource.Resource):
 	isLeaf = False
